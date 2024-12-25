@@ -1,7 +1,11 @@
 import style from './SearchBar.module.css';
 import { IoIosSearch } from 'react-icons/io';
 
-const SearchBar = ({ onSubmit }) => {
+interface SearchBarProps {
+  onSubmit: (event: React.FormEvent<HTMLFormElement>) => void;
+}
+
+const SearchBar: React.FC<SearchBarProps> = ({ onSubmit }) => {
   return (
     <header className={style.header}>
       <form className={style.searchForm} onSubmit={onSubmit}>

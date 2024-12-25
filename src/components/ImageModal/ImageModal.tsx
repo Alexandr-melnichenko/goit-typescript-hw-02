@@ -1,7 +1,17 @@
 import ReactModal from 'react-modal';
 import s from './ImageModal.module.css';
 
-const ImageModal = ({ onRequestClose, isOpen, imageUrl }) => {
+interface ImageModalProps {
+  onRequestClose: () => void;
+  isOpen: boolean;
+  imageUrl: string;
+}
+
+const ImageModal: React.FC<ImageModalProps> = ({
+  onRequestClose,
+  isOpen,
+  imageUrl,
+}) => {
   return (
     <div>
       <ReactModal

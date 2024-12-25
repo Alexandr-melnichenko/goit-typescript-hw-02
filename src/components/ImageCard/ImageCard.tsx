@@ -1,6 +1,17 @@
 import s from './ImageCard.module.css';
 
-const ImageCard = ({ image, handleImageClick }) => {
+interface ImageCardProps {
+  image: {
+    urls: {
+      small: string;
+      regular: string;
+    };
+    alt_description: string;
+  };
+  handleImageClick: (url: string) => void;
+}
+
+const ImageCard: React.FC<ImageCardProps> = ({ image, handleImageClick }) => {
   return (
     <div>
       <img

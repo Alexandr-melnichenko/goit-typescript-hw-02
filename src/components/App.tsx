@@ -15,21 +15,30 @@ ReactModal.setAppElement('#root');
 const API_KEY = 'client_id=eW8eLm1JsOKiPjrboVX295kU55DEdoHMcgKhKIxDCDw';
 const BASE_URL = 'https://api.unsplash.com/';
 
-function App() {
-  const [images, setImages] = useState([]);
-  const [query, setQuery] = useState('');
-  const [isLoading, setIsLoading] = useState(false);
-  const [pageNumber, setPageNumber] = useState(1);
-  const [imageUrl, setImageUrl] = useState('');
-  const [isOpen, setIsOpen] = useState(false);
-  const [totalPages, setTotalPages] = useState(1);
+interface Image {
+  id: string;
+  urls: {
+    small: string;
+    regular: string;
+  };
+  alt_description: string;
+}
 
-  const openModal = () => setIsOpen(true);
-  const closeModal = () => setIsOpen(false);
+function App() {
+  const [images, setImages] = useState<Image[]>([]);
+  const [query, setQuery] = useState<string>('');
+  const [isLoading, setIsLoading] = useState<boolean>(false);
+  const [pageNumber, setPageNumber] = useState<number>(1);
+  const [imageUrl, setImageUrl] = useState<string>('');
+  const [isOpen, setIsOpen] = useState<boolean>(false);
+  const [totalPages, setTotalPages] = useState<number>(1);
+
+  const openModal = (): void => setIsOpen(true);
+  const closeModal = (): void => setIsOpen(false);
 
   useEffect(() => {
     if (query === '') return;
-    async function fetchImages() {
+    const fetchImages = async (): Promise<void> => {
       setIsLoading(true);
       try {
         const response = await axios.get(
@@ -47,15 +56,17 @@ function App() {
       } finally {
         setIsLoading(false);
       }
-    }
+    };
 
     fetchImages();
   }, [query, pageNumber]);
 
-  const handleSubmit = event => {
+  const handleSubmit = (event: React.FormEvent<HTMLFormElement>): void => {
     event.preventDefault();
 
-    const searchQuery = event.target.elements.search.value.trim();
+    const searchQuery = (
+      event.currentTarget.elements.namedItem('search') as HTMLInputElement
+    ).value.trim();
     if (!searchQuery) {
       toast('Please fill search input!');
       return;
@@ -65,15 +76,13 @@ function App() {
     setImages([]);
   };
 
-  const handleMoreBtnClick = () => {
+  const handleMoreBtnClick = (): void => {
     setPageNumber(prevPage => prevPage + 1);
   };
 
-  const handleImageClick = url => {
-    {
-      setImageUrl(url);
-      openModal();
-    }
+  const handleImageClick = (url: string): void => {
+    setImageUrl(url);
+    openModal();
   };
 
   return (
