@@ -15,13 +15,18 @@ ReactModal.setAppElement('#root');
 const API_KEY = 'client_id=eW8eLm1JsOKiPjrboVX295kU55DEdoHMcgKhKIxDCDw';
 const BASE_URL = 'https://api.unsplash.com/';
 
-interface Image {
+export interface Image {
   id: string;
   urls: {
     small: string;
     regular: string;
   };
   alt_description: string;
+}
+
+interface ResponseData {
+  results: Image[];
+  total_pages: number;
 }
 
 function App() {
@@ -41,7 +46,7 @@ function App() {
     const fetchImages = async (): Promise<void> => {
       setIsLoading(true);
       try {
-        const response = await axios.get(
+        const response = await axios.get<ResponseData>(
           `${BASE_URL}search/photos?page=${pageNumber}&per_page=12&query=${query}&${API_KEY}`
         );
         setImages(prevImages =>

@@ -1,14 +1,6 @@
 import ImageCard from '../ImageCard/ImageCard';
 import s from './ImageGallery.module.css';
-
-interface Image {
-  id: string;
-  urls: {
-    small: string;
-    regular: string;
-  };
-  alt_description: string;
-}
+import { Image } from '../App';
 
 interface ImageGalleryProps {
   images: Image[];

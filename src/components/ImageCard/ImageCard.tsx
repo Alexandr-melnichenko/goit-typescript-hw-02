@@ -1,13 +1,8 @@
 import s from './ImageCard.module.css';
+import { Image } from '../App';
 
 interface ImageCardProps {
-  image: {
-    urls: {
-      small: string;
-      regular: string;
-    };
-    alt_description: string;
-  };
+  image: Image;
   handleImageClick: (url: string) => void;
 }
 
